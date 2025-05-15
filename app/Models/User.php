@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,4 +46,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+     // Método para verificar se o usuário é admin
+     public function isAdmin()
+     {
+         return $this->role === 'admin';
+     }
+
+        public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('nome', $permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
