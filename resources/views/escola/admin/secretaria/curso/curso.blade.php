@@ -97,7 +97,9 @@
                
             </tbody>
           </table>
+            {{$cursos->links()}}
         </div>
+
       </div>
     </div>
   </form>

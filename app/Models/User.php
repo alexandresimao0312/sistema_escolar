@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -46,6 +47,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function isOnline()
+{
+    return Cache::has('user-is-online-' . $this->id);
+}
+
      // Método para verificar se o usuário é admin
      public function isAdmin()
      {

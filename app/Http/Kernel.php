@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Message;
+use App\Policies\MessagePolicy;
 
 class Kernel extends ConsoleKernel
 {
@@ -23,6 +25,29 @@ class Kernel extends ConsoleKernel
     'secretaria' => \App\Http\Middleware\SecretariaMiddleware::class,
     'professor' => \App\Http\Middleware\ProfessorMiddleware::class,
     'aluno' => \App\Http\Middleware\AlunoMiddleware::class,
+    '2fa' => \App\Http\Middleware\TwoFactorMiddleware::class,
+    'last_seen' => \App\Http\Middleware\UpdateLastUserActivity::class,
+     'web' => [
+        \App\Http\Middleware\SetSessionCookieByGuard::class,
+        // outros middlewares
+    ],
+
 ];
+
+protected $policies = [
+    Message::class => MessagePolicy::class,
+];
+
+
+    protected $middlewareGroups = [
+    'web' => [
+        \App\Http\Middleware\SetSessionCookieByGuard::class, // <= aqui
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        // ...
+    ],
+];
+
+
     
 }

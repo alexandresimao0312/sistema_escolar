@@ -9,7 +9,7 @@ class Turma extends Model
     //
     protected $table = 'turmas' ;
 
-    protected $fillable = ['nome', 'curso_id', 'ano','classe_id'];
+    protected $fillable = ['nome', 'curso_id', 'ano','classe_id','ano_letivo'];
 
     public function curso() {
         return $this->belongsTo(Curso::class);

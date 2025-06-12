@@ -148,4 +148,42 @@
     });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $('#receiver_type').on('change', function () {
+        const tipo = $(this).val();
+
+        $('#receiver_id').val(null).trigger('change'); // Limpa o select
+        $('#receiver_id').select2({
+            ajax: {
+                url: '{{ route("chat.buscar.usuarios") }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        tipo: tipo,
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.map(user => ({
+                            id: user.id,
+                            text: user.nome
+                        }))
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Selecione o usuário...',
+            minimumInputLength: 0
+        });
+    });
+
+    // Inicializa o Select2
+    $('#receiver_id').select2({
+        placeholder: 'Selecione o usuário...'
+    });
+
+
   

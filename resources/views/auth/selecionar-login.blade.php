@@ -1,8 +1,8 @@
-@extends('layouts.app') {{-- Use um layout limpo e sem autenticação --}}
+@extends('layouts.escolher') {{-- Use um layout limpo e sem autenticação --}}
 
 @section('title', 'Escolher Tipo de Login')
 
-@section('content')
+@section('conteudo')
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
     <h2 class="mb-4">Escolha o Tipo de Login</h2>
 

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('salarios', function (Blueprint $table) {
+        //
+            Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('funcionario_id')->constrained('funcionarios')->onDelete('cascade');
-            $table->integer('mes');
-            $table->integer('ano');
-            $table->decimal('valor_pago', 10, 2);
-            $table->date('data_pagamento');
+            $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+            $table->morphs('sender'); // sender_id, sender_type (ex: Admin, Secretaria, Professor)
+            $table->text('body');
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('salarios');
+        //
+         Schema::dropIfExists('messages');
     }
 };

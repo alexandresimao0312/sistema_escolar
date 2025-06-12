@@ -8,22 +8,10 @@
 @endif
 <!-- Fim do Alert de sucess-->
 
- <!-- Alert de erro-->
- @if ($errors->any())
- <div class="alert alert-danger">
-  Não Foi Possivel Realizar Essa Operação :
-  <ul class="mt-2 mb-0">
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }} </li>  
-    @endforeach
-  </ul>
-</div>  
- @endif
-   <!-- Fim do Alert -->
 <div class="container " id="abaCadastrarAlunos" role="tabpanel" aria-labelledby="Cadastrar Alunos">
     <label class="h3">Atualizar Matricula</label>
     <hr>
-    <form action="{{route('matriculas.update', $matricula->id)}}" method="post"  id="formCadastroAluno">
+    <form action="{{route('secretaria.matriculas.update', $matricula->id)}}" method="post"  id="formCadastroAluno">
         @csrf
         @method('PUT')
       <input type='reset' class="btn btn-warning btn-sm" id="resetForm" value='Limpar todos os campos'/>

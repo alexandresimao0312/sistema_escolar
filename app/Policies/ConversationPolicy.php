@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Conversation;
+use App\Models\User;
+use Illuminate\Auth\Access\Response;
+
+
+class ConversationPolicy
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return false;
+    }
+
+    /**
+     * Verifica se o usuário pode ver a conversa.
+     */
+
+    public function view($user, Conversation $conversation)
+    {
+        return (
+            ($conversation->one_one_type === get_class($user) && $conversation->user_one_id === $user->id) ||
+            ($conversation->user_two_type === get_class($user) && $conversation->user_two_id === $user->id)
+        );
+    }
+
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Conversation $conversation): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Conversation $conversation): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, Conversation $conversation): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Conversation $conversation): bool
+    {
+        return false;
+    }
+    /**
+    * Verifica se o usuário pode enviar mensagens nesta conversa.
+     */
+    public function sendMessage(User $user, Conversation $conversation): bool
+    {
+        
+        return $this->view($user, $conversation);
+    }
+}

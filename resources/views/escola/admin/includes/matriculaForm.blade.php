@@ -2,7 +2,7 @@
 
 <div class="form-group">
     <label for="aluno_id">Selecionar Aluno</label>
-    <select name="aluno_id" id="aluno_id" class="form-control  @error('aluno_id') is-invalid @enderror"></select>
+    <select name="aluno_id" id="aluno_id"  class="form-control  @error('aluno_id') is-invalid @enderror"></select>
   @error('aluno_id')
   <div class="invalid-feedback">{{ $message }}</div>
 @enderror

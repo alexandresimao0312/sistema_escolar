@@ -65,24 +65,28 @@
           <i class="fas fa-history me-2"></i> Histórico de Atividades
       </a>
       </li>
+         <li class="nav-item">
+        <a href="{{ route('ajuda.index') }}" class="nav-link">
+          <i class="bi bi-patch-question"></i> Central de Ajudas
+      </a>
+      </li>
+      <div>
+              <ul class="nav flex-column mb-2" id="listaChats">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('chat.conversations.index')}}">
+                    <span data-feather="message-square"></span>
+                    Bater Papo
+                  </a>
+                </li>
+              </ul>
+            </div>
     </ul>
-
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-      <span>Chats</span>
-      <a class="d-flex align-items-center text-muted" href="#" onclick="criarChat()">
+     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <span>Criar Conversas</span>
+      <a class="d-flex align-items-center text-muted" href="{{route('chat.conversations.create')}}" onclick="criarChat()">
         <span data-feather="plus-circle" data-toggle="tooltip" data-placement="top" title="Criar um chat"></span>
       </a>
     </h6>
-    <div>
-      <ul class="nav flex-column mb-2" id="listaChats">
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="carregaChat('geral')" data-toggle="tooltip" data-placement="top" title="Apenas funcionários cadastrados corretamente no sistema têm acesso à este chat">
-            <span data-feather="message-square"></span>
-            Geral
-          </a>
-        </li>
-      </ul>
-    </div>
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
       <span>Abrir um chamado</span>
       <a class="d-flex align-items-center text-muted" href="#" data-toggle="modal" data-target="#chamados">

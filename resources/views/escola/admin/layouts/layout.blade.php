@@ -85,6 +85,20 @@ img.rounded-circle {
     opacity: 1;
     transform: translateY(0);
 }
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #0d6efd;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 9999;
+}
+  .vit {
+            max-height: 70px;
+            margin-bottom: 10px;
+        }
 
 
   </style>
@@ -106,7 +120,9 @@ img.rounded-circle {
         <script defer src="/__/firebase/init.js?useEmulator=true"></script>
         
         <nav class="navbar navbar-light navbar-expand-lg sticky-top bg-light flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../">Sistema Escolar</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="">
+        <img src="{{asset('/images/eugenia_gonsalves.webp') }}" class="vit" alt="Logo da Escola" style="width:100%; height: 30px">
+        </a>
         <ul class="navbar-nav">
           <li class="nav-item dropdown active navbar-toggler" class="" type="button" data-toggle="collapse">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -175,12 +191,15 @@ img.rounded-circle {
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-    
-        <div class="container-fluid">
+
+        <div class="container-fluid list-group-item d-flex justify-content-between align-items-center">
           <span class="navbar-text me-auto fw-bold">
             Bem-vindo(a), {{ Auth::guard('secretaria')->user()->nome ?? 'Secretária' }}
         </span>
-        @if (empty($notificacoes))
+       
+<div class="d-flex justify-content-between align-items-center">
+    <!-- notificações -->
+   @if (empty($notificacoes))
         @php
         $notificacoes = auth('secretaria')->user()
             ->notifications()
@@ -188,10 +207,10 @@ img.rounded-circle {
             ->take(4) // Mostra só as 4 mais recentes
             ->get();
        @endphp
-   
-<li class="nav-item dropdown">
+
+  <li class="nav-item dropdown list-group">
   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-      🔔 Notificações ({{ $notificacoes->count() }})
+      🔔({{ $notificacoes->count() }})
   </a>
   <ul class="dropdown-menu dropdown-menu-end" style="text-decoration: none">
       @forelse ($notificacoes as $notificacao)
@@ -206,7 +225,7 @@ img.rounded-circle {
           <li><span class="dropdown-item text-muted">Sem notificações</span></li>
       @endforelse
 
-      @if ($notificacoes->count() >= 4)
+      @if ($notificacoes->count() >= 3)
           <li><hr class="dropdown-divider"></li>
           <li>
               <a class="dropdown-item text-center" href="{{ route('secretaria.secretaria.notificacoes.index') }}">
@@ -217,9 +236,7 @@ img.rounded-circle {
   </ul>
 </li>
 @endif
-
-        <!-- Menu de perfil da secretaria -->
-  
+       <!-- Menu de perfil da secretaria -->
 <div class="dropdown ms-auto" id="dropdownPerfil">
   <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
       <img src="{{ isset($secretaria->foto ) ? asset('storage/' . Auth::guard('secretaria')->user()->foto) : asset('/images/profile_placeholder.png') }}"
@@ -243,72 +260,12 @@ img.rounded-circle {
       </li>
   </ul>
 </div>
-
-      </div>
+</div>
+</div>
       </nav>
       
     <div class="container-fluid">
-      <div id="chat">                          
-        <div class="container">
-          <div class="row pt-3">
-            <div class="chat-main">
-              <div class="col-md-12 chat-header rounded-top text-white">
-                <div class="row">
-                  <div class="col-md-6 username pl-2">
-                    <i aria-hidden="true" data-feather="message-square"></i>
-                    <h6 class="m-0" id="nomeChat">Geral</h6>
-                  </div>
-                  <div class="col-md-6 options text-right pr-2">
-                    <i data-feather="video" aria-hidden="true"></i>
-                    <i data-feather="phone" aria-hidden="true"></i>
-                    <i class="fa fa-cog mr-2" data-feather="settings" aria-hidden="true" onclick="configChat()"></i>
-                    <i class="fa fa-times hide-chat-box" data-feather="chevrons-down" id="fechaChat" aria-hidden="true"></i>
-                    <i class="fa fa-times hide-chat-box" data-feather="chevrons-up" id="abreChat" aria-hidden="true" style="visibility: hidden;"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="chat-content">
-                <div class="col-md-12 chats border">
-                  <ul class="p-0" id="mensagensChat">
-                    <!-- Exemplos de mesagens: 
-                      <li class="pl-2 pr-2 bg-primary rounded text-white text-center send-msg mb-1">
-                          hiii
-                      </li>
-                      <li class="p-1 rounded mb-1">
-                          <div class="receive-msg">
-                              <img src="http://nicesnippets.com/demo/image1.jpg">
-                              <div class="receive-msg-desc  text-center mt-1 ml-1 pl-2 pr-2">
-                                  <p class="pl-2 pr-2 rounded">hello</p>
-                              </div>
-                          </div>
-                      </li>
-                    -->  
-                  </ul>
-                </div>
-                <div class="col-md-12 message-box border pl-2 pr-2 border-top-0">
-                  <form id="enviaMsgChat">
-                    <div class="row">
-                      <div class="col-md-10">
-                        <input type="text" name="txtMsg" autocomplete="off" id="txtMsg" class="pl-0 pr-0 w-100" placeholder="Digite aqui..." />
-                        
-                      </div>
-                      <div class="col-auto">
-                        <button type="submit" class="float-right" id="btnEnviaMsg" style="padding: 0; border: none; background: none;"><i class="fa fa-telegram" data-feather="send" aria-hidden="true"></i></button>
-                      </div>
-                    </div>
-                  </form>  
-                  <div class="tools">
-                    <button type="button" onclick="enviarImagem()" id="btnEnviaImagem" style="padding: 0; border: none; background: none;"><i class="fa fa-picture-o" data-feather="image" aria-hidden="true"></i></button>
-                    <button type="button" onclick="enviarAnexo()" id="btnEnviaAnexo" style="padding: 0; border: none; background: none;"><i class="fa fa-paperclip" data-feather="paperclip" aria-hidden="true"></i></button>
-                    
-                    <button type="button" onclick="mensagemRapida('like')" id="btnEnviaLike" class="float-right" style="padding: 0; border: none; background: none;"><i class="fa fa-thumbs-o-up m-0" data-feather="thumbs-up" aria-hidden="true"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div class="row">
         <!--inclusão do nav bar-->
       @include('escola.admin.layouts.navbar')
@@ -337,7 +294,6 @@ img.rounded-circle {
               </button>
               <img src="{{ asset('storage/' . Auth::guard('secretaria')->user()->foto) }}" width="40" height="40" class="rounded-circle me-2">
               <label for="profilePic" class="text-muted float-right" id="username" style="margin-left: 10px;"></label>
-              
             </div>
           </div>
 
@@ -354,6 +310,8 @@ img.rounded-circle {
             <div class="container tab-pane fade show active" id="abaDashboard" role="tabpanel" aria-labelledby="Dashboard" style="width: 100%;">
              
               <div id="calendar"></div>
+
+              
             </div>
 
             @yield('conteudo')

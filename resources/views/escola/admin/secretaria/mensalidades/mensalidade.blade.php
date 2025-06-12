@@ -76,7 +76,7 @@
                 <td>{{ \Carbon\Carbon::parse($m->data_vencimento)->format('d/m/Y') }}</td>
                 <td> 
                       @if($m->estado !== 'pago')
-                    <form action="{{ route('mensalidades.pagar', $m->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.mensalidades.pagar', $m->id) }}" method="POST" class="d-inline">
                         @csrf
                         <button class="btn btn-sm btn-success" type="submit">Marcar como paga</button>
                     </form>

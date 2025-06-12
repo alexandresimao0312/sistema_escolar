@@ -14,7 +14,7 @@ class TurmaController extends Controller
      */
     public function index()
     {
-        $turmas = Turma::with('classe')->latest()->paginate(10);
+        $turmas = Turma::with('classe')->latest()->paginate(6);
         return view('escola.admin.admin.turmas.index', compact('turmas'));
     }
 
@@ -35,7 +35,7 @@ class TurmaController extends Controller
         ]);
 
         
-
+        
         Turma::create($request->all());
 
         return redirect()->route('admin.turmas.index')->with('success', 'Turma criada com sucesso!');

@@ -8,11 +8,13 @@ class Funcionario extends Model
 {
     //
     protected $table = 'funcionarios' ;
-    protected $fillable = ['nome', 'cargo', 'salario_base', 'contratado_em'];
+    protected $fillable = ['nome', 'cargo', 'salario_base', 'contratado_em','email','telefone'];
 
-    public function salarios() {
+    public function salarios()
+    {
         return $this->hasMany(Salario::class);
     }
+
     public function documentos()
     {
         return $this->hasMany(Documento::class);

@@ -106,6 +106,7 @@ return view('escola.admin.secretaria.pagamento.pagamentoCriar', compact('mensali
                     'data_pagamento' => $request->data_pagamento,
                 ]);
             }
+            event(new \App\Events\MensalidadePaga($pagamento));
             
     
             DB::commit();
@@ -123,6 +124,8 @@ return view('escola.admin.secretaria.pagamento.pagamentoCriar', compact('mensali
         'id_entidade' => $pagamento->id,
         'detalhes' => 'Pagamento Realizado, Mensalidade: ' . $pagamento->mensalidade_id,
     ]);
+
+       
         return redirect()->route('secretaria.pagamentos.create')->with('success', 'Pagamento registado com sucesso! Comprovativo gerado.');
 
         // Gerar PDF do comprovativo

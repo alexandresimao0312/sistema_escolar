@@ -160,10 +160,12 @@ class MatriculaController extends Controller
     public function edit(Matricula $matricula)
     {
         //
+       
         $alunos = Aluno::all();
         $cursos = Curso::all();
         $classes = Classe::all();
         $turmas = Turma::all();
+
         return view('escola.admin.secretaria.matriculas.matriculaEdit', compact('matricula', 'alunos', 'cursos', 'classes', 'turmas'));
     }
 

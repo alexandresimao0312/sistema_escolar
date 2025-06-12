@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Comprovativo de Pagamento</title>
-    <style>
-         body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
-        h2 { text-align: center; }
-        .info { margin-bottom: 20px; }
-    </style>
-</head>
-<body>
+
+@extends('escola.admin.secretaria.exports.layoutPDF')
+@section('conteudo')
     <h2>Comprovativo de Pagamento</h2>
+    <hr>
 
     <div class="info">
         <p><strong>Aluno:</strong> {{ $aluno->nome }}</p>
@@ -22,5 +14,5 @@
     </div>
 
     <p>Obrigado pelo seu pagamento.</p>
-</body>
-</html>
+    <hr>
+@endsection

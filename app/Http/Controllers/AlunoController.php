@@ -70,6 +70,8 @@ class AlunoController extends Controller
     public function store(AlunoRequest $request)
     {
         // 
+
+
       $aluno =  Aluno::create($request->all());
 
      
@@ -93,7 +95,7 @@ class AlunoController extends Controller
     {
     
       // $aluno = Aluno::findOrFail($aluno->id);
-      $aluno = Aluno::with('matriculas.curso', 'matriculas.classe', 'matriculas.turma')->findOrFail($aluno->id);
+     $aluno = Aluno::with('matriculas.curso', 'matriculas.classe', 'matriculas.turma')->findOrFail($aluno->id);
       $matriculas = Matricula::with('curso', 'classe', 'turma')->findOrFail($aluno->id);
        
         return view('escola.admin.secretaria.alunos.alunoInf', compact('aluno','matriculas'));
@@ -112,10 +114,10 @@ class AlunoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Aluno $id)
+    public function update(Request $request, Aluno $aluno)
     {
         //
-        $aluno = Aluno::findOrFail($id);
+        $aluno = Aluno::findOrFail($aluno->id);
         $request->validate([
             'nome' => 'required|string|max:255',
             'data_nascimento' => 'required|date',
@@ -124,6 +126,7 @@ class AlunoController extends Controller
             'email'=> 'required|email|unique:alunos,email,'. $aluno->id,
         ]);
 
+        
         $aluno->update($request->all());
 
          // Após editar aluno, por exemplo:
@@ -135,7 +138,7 @@ class AlunoController extends Controller
         'detalhes' => 'Aluno Atualizado com o nome: ' . $aluno->nome,
     ]);
         
-        return redirect()->route('secretaria.alunos.edit')->with('success', 'Aluno atualizado com sucesso!');
+        return redirect()->back()->with('success', 'Aluno atualizado com sucesso!');
     }
 
     /**

@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Salario extends Model
 {
     //
+    protected $table = 'salarios';
+    protected $fillable = ['funcionario_id', 'cargo','descontos','bonus','salario_base','total_recebido','referente_mes'];
 
-    protected $table = 'salarios' ;
-    protected $fillable = ['funcionario_id', 'mes', 'ano', 'valor_pago', 'data_pagamento'];
-
-    public function funcionario() {
+    public function funcionario()
+    {
         return $this->belongsTo(Funcionario::class);
     }
+
 }

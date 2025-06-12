@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('errors.layout')
 
-@section('content')
+@section('conteudo')
 <div class="container text-center mt-5">
     <h1 class="display-1 text-danger">403</h1>
     <h2 class="mb-4">Acesso Negado</h2>

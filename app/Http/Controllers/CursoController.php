@@ -13,7 +13,7 @@ class CursoController extends Controller
     public function index()
     {
         //
-        $cursos = Curso::all();
+        $cursos = Curso::paginate(4);
         return view('escola.admin.secretaria.curso.curso', compact('cursos'));
     }
 
@@ -41,7 +41,7 @@ class CursoController extends Controller
 
         Curso::create($request->all());
 
-        return redirect()->route('admin.cursos.index')->with('success', 'Curso criado com sucesso!');
+        return redirect()->route('admin.cursos.index')->with('success', 'O curso '.$request->nome .' foi criado com sucesso!');
     }
 
     /**
@@ -77,7 +77,7 @@ class CursoController extends Controller
 
         $curso->update($request->all());
 
-        return redirect()->route('admin.cursos.index')->with('success', 'Curso atualizado com sucesso!');
+        return redirect()->route('admin.cursos.index')->with('success', 'O curso '.$curso->nome .' foi atualizado com sucesso!');
     }
 
     /**
@@ -87,11 +87,11 @@ class CursoController extends Controller
     {
         //
         $curso->delete();
-        return redirect()->route('admin.cursos.index')->with('success', 'Curso deletado com sucesso!');
+        return redirect()->route('admin.cursos.index')->with('success', 'Curso '.$curso->nome .' foi deletado com sucesso!');
     }
     public function list()
     {
-        $cursos = Curso::all();
+        $cursos = Curso::paginate();
         return view('escola.admin.secretaria.curso.index', compact('cursos'));
     }
 
@@ -101,7 +101,7 @@ class CursoController extends Controller
     $curso->ativo = !$curso->ativo;
     $curso->save();
 
-    return redirect()->route('admin.cursos.index')->with('success', 'Estado do curso atualizado.');
+    return redirect()->route('admin.cursos.index')->with('success', 'Estado do curso ' . $curso->nome . ' foi atualizado com sucesso');
 }
 
   

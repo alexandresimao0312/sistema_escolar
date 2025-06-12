@@ -18,31 +18,29 @@
         <label>Ano</label>
         <input type="number" name="ano_letivo" class="form-control" value="{{ old('ano_letivo', $turma->ano_letivo ?? date('Y')) }}" required>
     </div>
+    
+    <div class="form-group">
+  <label for="curso_id">Curso</label>
+  <select id="curso_id" name="curso_id" class="form-control @error('curso_id') is-invalid @enderror">
+    <option value="">Selecione o Curso</option>
+    @foreach($cursos as $curso)
+        <option value="{{ $curso->id }}">{{ $curso->nome }}</option>
+    @endforeach
+</select>
+@error('curso_id')
+  <div class="invalid-feedback">{{ $message }}</div>
+@enderror
+</div>
 
-    <div class="mb-3">
-        <label>Classe</label>
-        <select name="classe_id" class="form-control" required>
-            <option value="">Selecione</option>
-            @foreach($classes as $classe)
-                <option value="{{ $classe->id }}" {{ (old('classe_id', $turma->classe_id ?? '') == $classe->id) ? 'selected' : '' }}>
-                    {{ $classe->nome }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label>Curso</label>
-        <select name="curso_id" class="form-control" required>
-            <option value="">Selecione</option>
-            @foreach($cursos as $curso)
-                <option value="{{ $curso->id }}" {{ (old('curso_id', $turma->curso_id ?? '') == $curso->id) ? 'selected' : '' }}>
-                    {{ $curso->nome }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
+<div class="form-group">
+  <label for="classe_id">Classe</label>
+  <select id="classe_id" name="classe_id" class="form-control @error('classe_id') is-invalid @enderror">
+    <option value="">Selecione a Classe</option>
+</select>
+@error('classe_id')
+  <div class="invalid-feedback">{{ $message }}</div>
+@enderror
+</div>
     <button type="submit" class="btn btn-success">Salvar</button>
     <a href="{{ route('admin.turmas.index') }}" class="btn btn-secondary">Voltar</a>
 </form>
